@@ -1,0 +1,20 @@
+{
+    "name": "virtualine-net/php-client",
+    "description": "Virtualine.net API Client",
+    "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "Virtualine.net",
+        "email": "info@virtualine.net"
+    }],
+    "autoload": {
+      "psr-4": {
+        "Virtualine\\": "src/Virtualine/"
+      }
+    },
+    "require": {
+      "php": ">=7.4"
+    },
+    "minimum-stability": "dev"
+}
+  

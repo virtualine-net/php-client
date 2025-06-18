@@ -130,9 +130,11 @@ $creditBalance = $client->getCredit();
 - `terminate(string $serviceId): array|false` - Terminate a service
 - `suspend(string $serviceId): array|false` - Suspend a service
 - `unsuspend(string $serviceId): array|false` - Unsuspend a service
+- `renew(string $serviceId): array|false` - Renew a service
 - `reinstallTemplates(string $serviceId): array` - Get available reinstall templates
 - `reinstall(string $serviceId, string $templateId, string $password): array|false` - Reinstall a service
 - `getWMKSUrl(string $serviceId): string|false` - Get WMSK URL for a service
+- `ssoLogin(string $serviceId): string|false` - Get SSO login URL for a service
 
 ## Error Handling
 

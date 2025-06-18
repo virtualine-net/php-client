@@ -84,7 +84,7 @@ class VirtualineClient
             $response = $this->client->get("testConnection");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -125,7 +125,7 @@ class VirtualineClient
             $response = $this->client->get("products");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return [];
             }
 
@@ -148,7 +148,7 @@ class VirtualineClient
             $response = $this->client->get("services/{$serviceId}");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return [];
             }
 
@@ -205,7 +205,7 @@ class VirtualineClient
             $response = $this->client->send($request);
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -228,7 +228,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/start");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -251,7 +251,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/stop");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -274,7 +274,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/reboot");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -300,7 +300,7 @@ class VirtualineClient
             $response = $this->client->send($request);
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -323,7 +323,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/terminate");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -346,7 +346,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/suspend");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -369,13 +369,36 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/unsuspend");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
             return $data;
         } catch (Exception $e) {
             throw new RuntimeException('Failed to unsuspend service: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
+    /**
+     * Renew a service
+     *
+     * @param string $serviceId Service ID
+     * @return array|false Service renewal response
+     * @throws RuntimeException If API request fails
+     */
+    public function renew(string $serviceId)
+    {
+        try {
+            $response = $this->client->post("services/{$serviceId}/renew");
+            $data = json_decode($response->getBody(), true);
+
+            if (isset($data['error'])) {
+                return false;
+            }
+
+            return $data;
+        } catch (Exception $e) {
+            throw new RuntimeException('Failed to renew service: ' . $e->getMessage(), 0, $e);
         }
     }
 
@@ -392,7 +415,7 @@ class VirtualineClient
             $response = $this->client->get("services/{$serviceId}/reinstall");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return [];
             }
 
@@ -445,7 +468,7 @@ class VirtualineClient
             $response = $this->client->post("services/{$serviceId}/actionWmksConsole");
             $data = json_decode($response->getBody(), true);
 
-            if (isset($data['error']) && $data['error'] === true) {
+            if (isset($data['error'])) {
                 return false;
             }
 
@@ -454,4 +477,28 @@ class VirtualineClient
             throw new RuntimeException('Failed to get WMKS URL: ' . $e->getMessage(), 0, $e);
         }
     }
+
+    /**
+     * SSO Login
+     * @param string $serviceId Service ID
+     * @return string|false SSO login URL
+     * @throws RuntimeException If API request fails
+     */
+    public function ssoLogin(string $serviceId)
+    {
+        try {
+            $response = $this->client->post("services/{$serviceId}/ssologin");
+            $data = json_decode($response->getBody(), true);
+
+            if (isset($data['error'])) {
+                return false;
+            }
+
+            return isset($data['data']['url']) ? $data['data']['url'] : false;
+        } catch (Exception $e) {
+            throw new RuntimeException('Failed to get SSO login URL: ' . $e->getMessage(), 0, $e);
+        }
+    }
+
+
 }

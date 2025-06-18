@@ -1,0 +1,50 @@
+# IDE and Editor files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Composer
+/vendor/
+composer.phar
+composer.lock
+
+# PHPUnit
+/phpunit.xml
+/phpunit.xml.dist
+/tests/coverage/
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Cache and logs
+/logs/
+*.log
+/cache/
+*.cache
+
+# Build and dependency directories
+/node_modules/
+/dist/
+/build/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
